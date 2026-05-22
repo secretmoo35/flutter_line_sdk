@@ -1,7 +1,8 @@
 import Flutter
 import UIKit
 
-import LineSDK
+// import LineSDK
+@preconcurrency import LineSDK 
 
 public class SwiftFlutterLineSdkPlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
@@ -22,6 +23,7 @@ public class SwiftFlutterLineSdkPlugin: NSObject, FlutterPlugin {
     method.call(arguments: arguments, result: result)
   }
 
+  @MainActor
   public func application(
     _ application: UIApplication,
     open url: URL,
@@ -30,6 +32,7 @@ public class SwiftFlutterLineSdkPlugin: NSObject, FlutterPlugin {
     return LoginManager.shared.application(application, open: url, options: options)
   }
 
+  @MainActor
   public func application(
     _ application: UIApplication,
     continue userActivity: NSUserActivity,
@@ -122,6 +125,7 @@ extension LineChannelMethod {
     result(nil)
   }
 
+  @MainActor
   func login(arguments: [String: Any]?, result: @escaping FlutterResult) {
 
     guard let args = arguments else {
